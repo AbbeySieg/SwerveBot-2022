@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,15 +24,17 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(0);
 
   /* Drive Controls */
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  private final int translationAxis = 1;
+  private final int strafeAxis = 1;
+  private final int rotationAxis = 1;
+
+  
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro =
-      new JoystickButton(driver, XboxController.Button.kY.value);
+      new JoystickButton(driver, 1);
   private final JoystickButton robotCentric =
-      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+      new JoystickButton(driver, 2);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -50,6 +51,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+    private JoystickButton bButton = new JoystickButton(driver, 1);
   }
 
   /**
