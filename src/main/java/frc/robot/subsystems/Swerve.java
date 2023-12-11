@@ -7,7 +7,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,10 +25,13 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
 
   public Swerve() {
+
+    gyro = new AHRS(SPI.Port.kMXP);
+
    
     zeroGyro();
 
-    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
+    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), null);
 
     mSwerveMods =
         new SwerveModule[] {
@@ -67,10 +73,16 @@ public class Swerve extends SubsystemBase {
     return swerveOdometry.getPoseMeters();
   }
 
+  /**
+   * @param pose
+   */
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(pose, getYaw());
+    swerveOdometry.resetPosition(getYaw(), null, pose);
   }
 
+  /**
+   * @return
+   */
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     for (SwerveModule mod : mSwerveMods) {
@@ -79,8 +91,16 @@ public class Swerve extends SubsystemBase {
     return states;
   }
 
+  public SwerveModulePosition[] getPositions() {
+    SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    for (SwerveModule mod : mSwerveMods) {
+      positions[mod.moduleNumber] = mod.getPosition();
+    }
+    return positions;
+  }
+
   public void zeroGyro() {
-    gyro.setYaw(0);
+    gyro.getYaw();
   }
 
   public Rotation2d getYaw() {
@@ -91,7 +111,7 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swerveOdometry.update(getYaw(), getStates());
+    swerveOdometry.update(getYaw(), getPositions());
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
