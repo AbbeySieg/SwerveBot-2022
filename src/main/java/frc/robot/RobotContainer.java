@@ -4,14 +4,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+//import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.*;
+import frc.robot.autos.exampleAuto;
+//import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Swerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,8 +34,17 @@ public class RobotContainer {
   
 
   /* Driver Buttons */
+  /**
+   *
+   */
   private final JoystickButton zeroGyro =
       new JoystickButton(driver, 1);
+ 
+
+  public JoystickButton getZeroGyro() {
+    return zeroGyro;
+  }
+
   private final JoystickButton robotCentric =
       new JoystickButton(driver, 2);
 
@@ -48,17 +60,16 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric.get()));
+  }        
 
-    // Configure the button bindings
-    configureButtonBindings();
-    private JoystickButton bButton = new JoystickButton(driver, 1);
-  }
+    
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * @return 
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
