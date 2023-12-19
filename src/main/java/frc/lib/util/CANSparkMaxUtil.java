@@ -27,6 +27,7 @@ public class CANSparkMaxUtil {
    *     constructed.
    * @param enableFollowing Whether to enable motor following.
    */
+<<<<<<< HEAD
  // public static void setCANSparkMaxBusUsage(
  //    CANSparkMax motor, Usage usage, boolean enableFollowing) {
  //    }
@@ -54,6 +55,34 @@ public class CANSparkMaxUtil {
  //     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus3, 500);
  //   }
  // }
+=======
+ public static void setCANSparkMaxBusUsage(
+     CANSparkMax motor, Usage usage, boolean enableFollowing) {
+   if (enableFollowing) {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 10);
+   } else {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 500);
+   }
+
+   if (usage == Usage.kAll) {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus3, 50);
+    } else if (usage == Usage.kPositionOnly) {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 500);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus3, 500);
+   } else if (usage == Usage.kVelocityOnly) {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 500);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus3, 500);
+    } else if (usage == Usage.kMinimal) {
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 500);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 500);
+     motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus3, 500);
+    }
+ }
+>>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
 
   /**
    * This function allows reducing a Spark Max's CAN bus utilization by reducing the periodic status
@@ -66,8 +95,16 @@ public class CANSparkMaxUtil {
    * @param motor The motor to adjust the status frame periods on.
    * @param usage The status frame feedack to enable. kAll is the default when a CANSparkMax is
    *     constructed.
+<<<<<<< HEAD
 //   */
 //  public static void setCANSparkMaxBusUsage(CANSparkMax motor, Usage usage) {
 //    setCANSparkMaxBusUsage(motor, usage, false);
 //  }
 //}
+=======
+   */
+ public static void setCANSparkMaxBusUsage(CANSparkMax motor, Usage usage) {
+    setCANSparkMaxBusUsage(motor, usage, false);
+  }
+}
+>>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9

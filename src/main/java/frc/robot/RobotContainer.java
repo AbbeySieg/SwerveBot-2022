@@ -6,7 +6,11 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+<<<<<<< HEAD
 //import edu.wpi.first.wpilibj.PS4Controller.Button;
+=======
+import edu.wpi.first.wpilibj.XboxController;
+>>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -27,17 +31,16 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(0);
 
   /* Drive Controls */
-  private final int translationAxis = 1;
-  private final int strafeAxis = 1;
-  private final int rotationAxis = 1;
-
-  
+  private final int translationAxis = Joystick.AxisType.kY.value;
+  private final int strafeAxis = Joystick.AxisType.kX.value;
+  private final int rotationAxis = Joystick.AxisType.kZ.value;
 
   /* Driver Buttons */
   /**
    *
    */
   private final JoystickButton zeroGyro =
+<<<<<<< HEAD
       new JoystickButton(driver, 1);
  
 
@@ -45,8 +48,11 @@ public class RobotContainer {
     return zeroGyro;
   }
 
+=======
+      new JoystickButton(driver, XboxController.Button.kY.value);
+>>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
   private final JoystickButton robotCentric =
-      new JoystickButton(driver, 2);
+      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -55,6 +61,7 @@ public class RobotContainer {
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
+<<<<<<< HEAD
             s_Swerve,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
@@ -63,6 +70,14 @@ public class RobotContainer {
   }        
 
     
+=======
+        )
+        );
+
+    // Configure the button bindings
+    configureButtonBindings();
+  }
+>>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
