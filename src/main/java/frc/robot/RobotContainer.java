@@ -6,11 +6,7 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-<<<<<<< HEAD
 //import edu.wpi.first.wpilibj.PS4Controller.Button;
-=======
-import edu.wpi.first.wpilibj.XboxController;
->>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -19,7 +15,7 @@ import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Swerve;
-
+import frc.robot.commands.TeleopSwerve;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -40,7 +36,6 @@ public class RobotContainer {
    *
    */
   private final JoystickButton zeroGyro =
-<<<<<<< HEAD
       new JoystickButton(driver, 1);
  
 
@@ -48,36 +43,29 @@ public class RobotContainer {
     return zeroGyro;
   }
 
-=======
-      new JoystickButton(driver, XboxController.Button.kY.value);
->>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
-  private final JoystickButton robotCentric =
-      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+ // private final JoystickButton robotCentric =
+  //    new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
 
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    s_Swerve.setDefaultCommand(
-        new TeleopSwerve(
-<<<<<<< HEAD
-            s_Swerve,
-            () -> -driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
-            () -> robotCentric.get()));
-  }        
-
-    
-=======
-        )
-        );
-
+  
     // Configure the button bindings
     configureButtonBindings();
   }
->>>>>>> ffbc52f6a1aa6de34a2a783ce33becdb1feb99b9
+
+  private void configureButtonBindings() {
+    /* Driver Buttons */
+    zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+  }
+
+   
+
+    
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -86,10 +74,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    * @return 
    */
-  private void configureButtonBindings() {
-    /* Driver Buttons */
-    zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Swerve.Mod0;
 
 public class Swerve extends SubsystemBase {
 
@@ -24,15 +25,15 @@ public class Swerve extends SubsystemBase {
 
   private AHRS gyro;
 
+  
   public Swerve() {
 
-    // navX MXP using SPI
-    gyro = new AHRS(SPI.Port.kMXP); 
-   
-    zeroGyro();
+    gyro = new AHRS(SPI.Port.kMXP); // plugged into the big port thing on the RoboRIO
+    gyro.calibrate();
 
-    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
+    swerveOdometry = SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw());
 
+    Object angleMotor;
     mSwerveMods =
         new SwerveModule[] {
           new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -42,7 +43,11 @@ public class Swerve extends SubsystemBase {
         };
 
     field = new Field2d();
-    SmartDashboard.putData("Field", field);
+    
+  }
+
+  private SwerveDriveOdometry SwerveDriveOdometry(SwerveDriveKinematics swervekinematics, Rotation2d yaw) {
+    return null;
   }
 
   public void drive(
@@ -76,9 +81,8 @@ public class Swerve extends SubsystemBase {
   /**
    
    */
-  public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(pose, getYaw());
-  }
+  public void resetOdometry(Pose2d pose) { 
+}
 
 
   public SwerveModuleState[] getStates() {
@@ -90,7 +94,6 @@ public class Swerve extends SubsystemBase {
   }
 
   public void zeroGyro() {
-    gyro.setYaw(0);
   }
 
   public Rotation2d getYaw() {
@@ -101,8 +104,10 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    swerveOdometry.update(getYaw(), getStates());
+    Rotation2d gyroAngle = Rotation2d.fromDegrees(gyro.getYaw());
     field.setRobotPose(getPose());
+  
+  
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(

@@ -38,6 +38,10 @@ public class SwerveModule {
       new SimpleMotorFeedforward(
           Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
+  /**
+   * @param moduleNumber
+   * @param moduleConstants
+   */
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
@@ -78,7 +82,6 @@ public class SwerveModule {
   private void configAngleEncoder() {
     angleEncoder.configFactoryDefault();
     CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
-    angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
   }
 
   private void configAngleMotor() {
@@ -146,7 +149,6 @@ public class SwerveModule {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
   }
 
-public SwerveModulePosition getPosition() {
-    return null;
+
 }
-}
+
